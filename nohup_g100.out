@@ -1,0 +1,12 @@
+Epoch: 1
+Train_acc: 0.1951453488372093
+Train_loss: 2.912909507751465
+Test_acc: 0.2221517527675277
+Global_step: 2151
+nohup: ignoring input
+Epoch: 2
+Train_acc: 0.2296656976744186
+Train_loss: 2.435110569000244
+Test_acc: 0.2374308118081181
+Global_step: 4301
+Epoch: 3

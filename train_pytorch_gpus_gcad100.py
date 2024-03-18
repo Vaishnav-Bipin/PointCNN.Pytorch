@@ -141,13 +141,13 @@ torch.cuda.set_device(0)
 model = Classifier().cuda()
 model= nn.DataParallel(model, device_ids=[torch.cuda.current_device()])
 
-resume = False
+resume = True
 
 global_step = 1
 start_epoch = 1
 if resume:
-    # global_step = 
-    # start_epoch = 
+    global_step = 2151
+    start_epoch = 2
     device = torch.device('cuda')
     state_dict = torch.load('model_g100.th', map_location=device)
     model.load_state_dict(state_dict)
@@ -238,7 +238,7 @@ for epoch in range(start_epoch, NUM_EPOCHS+1):
 
             total_seen += BATCH_SIZE
             total_correct += bools.item()
-            # print("loss: "+str(loss.data))
+            #print("loss: "+str(loss.data))
             # print(batch_idx)
             # if global_step % 25 == 0:
             #     loss_v = loss.data
@@ -312,10 +312,10 @@ for epoch in range(start_epoch, NUM_EPOCHS+1):
     print("Test_acc: " + str(total_correct_all/total_seen_all))
     torch.save(model.state_dict(), 'model_g100.th')
     print("Global_step: " + str(global_step))
-    if epoch == 125:
-        torch.save(model.state_dict(), 'model125_g100.th')
+    if epoch == 150:
+        torch.save(model.state_dict(), 'model150_g100.th')
 
-torch.save(model.state_dict(), 'model250_g100.th')
+torch.save(model.state_dict(), 'model300_g100.th')
 
 
 
