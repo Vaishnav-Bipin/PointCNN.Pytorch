@@ -146,8 +146,8 @@ resume = True
 global_step = 1
 start_epoch = 1
 if resume:
-    global_step = 4301
-    start_epoch = 3
+    global_step = 225751
+    start_epoch = 106
     device = torch.device('cuda')
     state_dict = torch.load('model_g100.th', map_location=device)
     model.load_state_dict(state_dict)
