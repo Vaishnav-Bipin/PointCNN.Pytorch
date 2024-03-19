@@ -312,10 +312,10 @@ for epoch in range(start_epoch, NUM_EPOCHS+1):
     print("Test_acc: " + str(total_correct_all/total_seen_all))
     torch.save(model.state_dict(), 'model_g100.th')
     print("Global_step: " + str(global_step))
-    if epoch == 150:
-        torch.save(model.state_dict(), 'model150_g100.th')
+    if epoch == 300:
+        torch.save(model.state_dict(), 'model300_g100.th')
 
-torch.save(model.state_dict(), 'model300_g100.th')
+torch.save(model.state_dict(), 'model500_g100.th')
 
 
 
