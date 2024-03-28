@@ -11,8 +11,9 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(BASE_DIR)
 sys.path.append(os.path.join(BASE_DIR, 'models'))
 sys.path.append(os.path.join(BASE_DIR, 'utils'))
-
+print('here')
 import provider
+print('here')
 import math
 import random
 import data_utils
@@ -80,7 +81,6 @@ order = 'rxyz'
 scaling_range = [0.05, 0.05, 0.05, 'g']
 scaling_range_val = [0, 0, 0, 'u']
 
-
 class modelnet40_dataset(Dataset):
 
     def __init__(self, data, labels):
@@ -92,7 +92,6 @@ class modelnet40_dataset(Dataset):
 
     def __getitem__(self, i):
         return self.data[i], self.labels[i]
-
 
 # C_in, C_out, D, N_neighbors, dilution, N_rep, r_indices_func, C_lifted = None, mlp_width = 2
 # (a, b, c, d, e) == (C_in, C_out, N_neighbors, dilution, N_rep)
@@ -182,7 +181,7 @@ for epoch in range(1, NUM_EPOCHS+1):
         loss_sum = 0
 
         if epoch > 1:
-            LEARNING_RATE *= decay_rate ** (global_step // decay_steps)
+            LEARNING_RATE *= DECAY_RATE ** (global_step // DECAY_STEP)
             if LEARNING_RATE > LEARNING_RATE_MIN:
                 print("NEW LEARNING RATE:", LEARNING_RATE)
                 optimizer = torch.optim.SGD(model.parameters(), lr = LEARNING_RATE, momentum = 0.9)
@@ -212,9 +211,9 @@ for epoch in range(1, NUM_EPOCHS+1):
             loss = loss_fn(out, label)
             loss.backward()
             optimizer.step()
-            print("epoch: "+str(epoch) + "   loss: "+str(loss.data[0]))
+            print("epoch: "+str(epoch) + "   loss: "+str(loss.data))
             if global_step % 25 == 0:
-                loss_v = loss.data[0]
+                loss_v = loss.data
                 print("Loss:", loss_v)
             else:
                 loss_v = 0

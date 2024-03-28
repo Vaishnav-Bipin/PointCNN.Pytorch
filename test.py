@@ -68,7 +68,7 @@ BN_DECAY_CLIP = 0.99
 
 LEARNING_RATE_MIN = 0.00001
         
-NUM_CLASS = 40
+NUM_CLASS = 33
 BATCH_SIZE = FLAGS.batch_size #32
 NUM_EPOCHS = FLAGS.max_epoch
 jitter = 0.01
@@ -143,7 +143,7 @@ print("------Building model-------")
 print("------Successfully Built model-------")
 
 device = torch.device('cuda:0')
-state_dict = torch.load('model250mn.th', map_location=device)
+state_dict = torch.load('model300_g100.th', map_location=device)
 # print(state_dict)
 from collections import OrderedDict
 new_state_dict = OrderedDict()
@@ -159,7 +159,8 @@ model.load_state_dict(state_dict)
 # data, label = provider.loadDataFile('data/modelnet40_ply_hdf5_2048/ply_data_train0.h5')
 # print(label[0])
 
-TEST_FILES = provider.getDataFiles(os.path.join(BASE_DIR, 'data/modelnet40_ply_hdf5_2048/test_files.txt'))
+# TEST_FILES = provider.getDataFiles(os.path.join(BASE_DIR, 'data/modelnet40_ply_hdf5_2048/test_files.txt'))
+TEST_FILES = provider.getDataFiles(os.path.join(BASE_DIR, 'data/GrabCad100K_hdf5_2048/test_files.txt'))
 loss_fn = nn.CrossEntropyLoss()
 
 def precision_cls(mat, cls):

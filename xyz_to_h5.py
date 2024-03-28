@@ -184,4 +184,20 @@ if __name__ == "__main__":
         old_pc_base = "/home/vaishnav/PC_files_50"
         new_h5_base = '/home/vaishnav/Benchmarks/PointCNN.Pytorch/data/GrabCad50K_hdf5_2048'
         main(old_pc_base, new_h5_base)
+    if sys.argv[1] == "67":
+        old_pc_base = "/home/vaishnav/PC_files_67"
+        new_h5_base = 'data/GrabCad67_hdf5_2048'
+        main(old_pc_base, new_h5_base)
+    if sys.argv[1] == "34":
+        old_pc_base = "/home/vaishnav/PC_files_34"
+        new_h5_base = 'data/GrabCad34_hdf5_2048'
+        main(old_pc_base, new_h5_base)
+    if sys.argv[1] == "67l":
+        old_pc_base = "/home/vaishnav/PC_files_67_level"
+        new_h5_base = 'data/GrabCad67L_hdf5_2048'
+        main(old_pc_base, new_h5_base)
+    if sys.argv[1] == "34l":
+        old_pc_base = "/home/vaishnav/PC_files_34_level"
+        new_h5_base = 'data/GrabCad34L_hdf5_2048'
+        main(old_pc_base, new_h5_base)
 
