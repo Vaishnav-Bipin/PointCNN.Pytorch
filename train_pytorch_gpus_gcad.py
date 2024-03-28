@@ -241,7 +241,7 @@ for epoch in range(start_epoch, NUM_EPOCHS+1):
 
             total_seen += BATCH_SIZE
             total_correct += bools.item()
-            print("loss: "+str(loss.data))
+            # print("loss: "+str(loss.data))
             # print(batch_idx)
             # if global_step % 25 == 0:
             #     loss_v = loss.data
