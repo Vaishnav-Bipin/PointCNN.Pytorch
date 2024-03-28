@@ -38,6 +38,7 @@ dtype = torch.cuda.FloatTensor
 # Load Hyperparameters
 parser = argparse.ArgumentParser()
 parser.add_argument('--gpu', type=int, default=0, help='GPU to use [default: GPU 0]')
+parser.add_argument('--vers', default='', help='GrabCad dataset version')
 parser.add_argument('--model', default='pointnet_cls',
                     help='Model name: pointnet_cls or pointnet_cls_basic [default: pointnet_cls]')
 parser.add_argument('--log_dir', default='log', help='Log dir [default: log]')
@@ -137,14 +138,14 @@ class Classifier(nn.Module):
 
 
 # print("------Building model-------")
-vers = '34L'
-torch.cuda.set_device(3)
+vers = FLAGS.vers
+torch.cuda.set_device(GPU_INDEX)
 
 
 model = Classifier().cuda()
 model= nn.DataParallel(model, device_ids=[torch.cuda.current_device()])
 
-resume = True
+resume = False
 
 global_step = 1
 start_epoch = 1
@@ -152,7 +153,7 @@ if resume:
     start_epoch = 1
     global_step = 1
     device = torch.device('cuda')
-    state_dict = torch.load('model_g'+vers+'.th', map_location=device)
+    state_dict = torch.load(vers+'.th', map_location=device)
     model.load_state_dict(state_dict)
 # print("------Successfully Built model-------")
 
@@ -168,8 +169,8 @@ loss_fn = nn.CrossEntropyLoss()
 # TRAIN_FILES = provider.getDataFiles(os.path.join(BASE_DIR, 'data/modelnet40_ply_hdf5_2048/train_files.txt'))
 # TEST_FILES = provider.getDataFiles(os.path.join(BASE_DIR, 'data/modelnet40_ply_hdf5_2048/test_files.txt'))
 
-TRAIN_FILES = provider.getDataFiles(os.path.join(BASE_DIR, 'data/GrabCad50K_hdf5_2048/train_files.txt'))
-TEST_FILES = provider.getDataFiles(os.path.join(BASE_DIR, 'data/GrabCad50K_hdf5_2048/test_files.txt'))
+TRAIN_FILES = provider.getDataFiles(os.path.join(BASE_DIR, 'data/GrabCad'+vers+'_hdf5_2048/train_files.txt'))
+TEST_FILES = provider.getDataFiles(os.path.join(BASE_DIR, 'data/GrabCad'+vers+'_hdf5_2048/test_files.txt'))
 
 losses = []
 accuracies = []
@@ -240,7 +241,7 @@ for epoch in range(start_epoch, NUM_EPOCHS+1):
 
             total_seen += BATCH_SIZE
             total_correct += bools.item()
-            # print("loss: "+str(loss.data))
+            print("loss: "+str(loss.data))
             # print(batch_idx)
             # if global_step % 25 == 0:
             #     loss_v = loss.data
@@ -312,12 +313,12 @@ for epoch in range(start_epoch, NUM_EPOCHS+1):
         total_correct_all += total_correct
         total_seen_all += total_seen
     print("Test_acc: " + str(total_correct_all/total_seen_all))
-    torch.save(model.state_dict(), 'model_g50.th')
+    torch.save(model.state_dict(), vers+'.th')
     print("Global_step: " + str(global_step))
-    if epoch == 125:
-        torch.save(model.state_dict(), 'model125_g50.th')
+    if epoch == 300:
+        torch.save(model.state_dict(), vers+'_e300.th')
 
-torch.save(model.state_dict(), 'model250_g50.th')
+torch.save(model.state_dict(), vers+'_e' + str(NUM_EPOCHS) + '.th')
 
 
 
