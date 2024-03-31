@@ -1593,3 +1593,6 @@ Global_step: 533605
 Epoch: 319
 Train_acc: 0.4291939809296782
 Train_loss: 2.5939438343048096
+Test_acc: 0.17437350835322196
+Global_step: 535283
+Epoch: 320
