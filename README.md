@@ -28,10 +28,18 @@ python3 -m venv venvgpu
 pip install -r requirements.txt
 
 mkdir data
-mkdir data/GrabCad34L_hdf5_2048
+mkdir data/GrabCad67_hdf5_2048
 mkdir data/GrabCad34_hdf5_2048
 mkdir data/GrabCad67L_hdf5_2048
-mkdir data/GrabCad67_hdf5_2048
+mkdir data/GrabCad34L_hdf5_2048
+
+# ensure directories PC_files_67, PC_files_34, PC_files_67L, PC_files_34L in base folder
+# ensure this repo is in base/Benchmarks/PointCNN.Pytorch
+
+python xyz_to_h5.py
+
+# python train_pytorch_gpus_gcad.py
+# python test.py
 ```
 
 
